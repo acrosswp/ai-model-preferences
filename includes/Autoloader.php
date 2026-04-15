@@ -103,9 +103,21 @@ class Autoloader {
 			$file_path  = $this->plugin_path . 'includes/' . $class_file . '.php';
 		}
 
-		// Load the file if it exists
+		// Load the file if it exists.
 		if ( file_exists( $file_path ) ) {
 			require_once $file_path;
+			return;
+		}
+
+		// Linux hosts are case-sensitive. Some legacy plugin files are stored with a
+		// lowercase basename (for example includes/loader.php), so fall back to that
+		// form when the PSR-4 style filename does not exist.
+		$directory           = dirname( $file_path );
+		$basename            = basename( $file_path );
+		$lowercase_file_path = $directory . '/' . strtolower( $basename );
+
+		if ( file_exists( $lowercase_file_path ) ) {
+			require_once $lowercase_file_path;
 		}
 	}
 }
