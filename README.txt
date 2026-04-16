@@ -1,9 +1,9 @@
-=== AI Model Preferences ===
+=== AcrossWP AI Model Manager ===
 Contributors: okpoojagupta, acrosswp
 Donate link: https://github.com/AcrossWP/ai-model-manager
-Tags: ai, artificial intelligence, models, preferences, connectors
+Tags: ai, connectors, models, manager, preferences
 Requires at least: 7.0
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 0.0.1
 License: GPL-2.0+
@@ -13,7 +13,7 @@ Choose your preferred AI model for text generation, image generation, and vision
 
 == Description ==
 
-AI Model Preferences gives site administrators full control over which AI model WordPress uses for each capability type. By default, WordPress picks the first available model from your configured AI connectors. This plugin adds a settings page under **Settings > AI Model Preferences** where you can pin a specific model per capability — and that model will always be prioritised.
+AI Model Manager gives site administrators full control over which AI model WordPress uses for each capability type. By default, WordPress picks the first available model from your configured AI connectors. This plugin adds a settings page under **Settings > AI Model Preferences** where you can pin a specific model per capability — and that model will always be prioritised.
 
 **Capability types supported:**
 
@@ -25,7 +25,7 @@ AI Model Preferences gives site administrators full control over which AI model 
 
 The plugin hooks into the WordPress AI model preference filters (`wpai_preferred_text_models`, `wpai_preferred_image_models`, `wpai_preferred_vision_models`). When a preference is saved and the corresponding AI provider is connected, the chosen model is moved to the top of the candidate list so WordPress selects it first.
 
-Preferences are stored as a single serialised option in the database and are exposed to the WordPress REST API, meaning the settings page saves without a full page reload using a React-powered interface.
+Manager are stored as a single serialised option in the database and are exposed to the WordPress REST API, meaning the settings page saves without a full page reload using a React-powered interface.
 
 **Requirements:**
 
@@ -36,7 +36,7 @@ Preferences are stored as a single serialised option in the database and are exp
 
 1. Upload the `acrosswp-ai-model-manager` folder to the `/wp-content/plugins/` directory, or install through the WordPress Plugins screen directly.
 2. Activate the plugin through the **Plugins** menu in WordPress.
-3. Go to **Settings > AI Model Preferences**.
+3. Go to **Settings > AI Model Manager**.
 4. Choose your preferred model for each capability type from the dropdowns. Only models from configured and connected providers appear.
 5. Click **Save Changes**.
 

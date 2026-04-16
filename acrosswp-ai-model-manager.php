@@ -25,7 +25,7 @@ namespace AcrossWP_AI_Model_Manager;
  * Description:       A WordPress plugin to manage AI model preferences for users, allowing them to select and save their preferred AI models for various tasks.
  * Version:           0.0.1
  * Author:            okpoojagupta
- * Author URI:        https://github.com/AcrossWP/ai-model-manager
+ * Author URI:        https://github.com/AcrossWP/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       acrosswp-ai-model-manager
