@@ -1,7 +1,7 @@
-=== AcrossWP AI Model Manager ===
+=== Abilities Model Selector ===
 Contributors: okpoojagupta, acrosswp
 Donate link: https://github.com/AcrossWP/abilities-model-selector
-Tags: ai, connectors, models, manager, preferences
+Tags: ai, connectors, models, manager, preferences, abilities
 Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 7.4
@@ -13,7 +13,7 @@ Choose your preferred AI model for text generation, image generation, and vision
 
 == Description ==
 
-AI Model Manager gives site administrators full control over which AI model WordPress uses for each capability type. By default, WordPress picks the first available model from your configured AI connectors. This plugin adds a settings page under **Settings > AI Model Preferences** where you can pin a specific model per capability — and that model will always be prioritised.
+Abilities Model Selector gives site administrators full control over which AI model WordPress uses for each capability type. By default, WordPress picks the first available model from your configured AI connectors. This plugin adds a settings page under **Settings > AI Model Preferences** where you can pin a specific model per capability — and that model will always be prioritised.
 
 **Capability types supported:**
 
@@ -36,7 +36,7 @@ Manager are stored as a single serialised option in the database and are exposed
 
 1. Upload the `abilities-model-selector` folder to the `/wp-content/plugins/` directory, or install through the WordPress Plugins screen directly.
 2. Activate the plugin through the **Plugins** menu in WordPress.
-3. Go to **Settings > AI Model Manager**.
+3. Go to **Settings > Abilities Model Selector**.
 4. Choose your preferred model for each capability type from the dropdowns. Only models from configured and connected providers appear.
 5. Click **Save Changes**.
 
