@@ -17,9 +17,9 @@
  * general skeleton and outline for how the file should work.
  *
  * For more information, see the following discussion:
- * https://github.com/AcrossWP/abilities-model-selector
+ * https://github.com/AcrossWP/acrossai-model-manager
  *
- * @link       https://github.com/AcrossWP/abilities-model-selector
+ * @link       https://github.com/AcrossWP/acrossai-model-manager
  * @since      0.0.1
  *
  * @package    AcrossAI_Model_Manager

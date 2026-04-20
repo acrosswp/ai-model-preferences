@@ -1,7 +1,7 @@
 === AcrossAI Model Manager ===
 Contributors: okpoojagupta
-Donate link: https://github.com/AcrossWP/abilities-model-selector
-Tags: ai, connectors, models, manager, preferences, abilities
+Donate link: https://github.com/AcrossWP/acrossai-model-manager
+Tags: ai, models, manager, preferences, abilities
 Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 7.4
@@ -34,7 +34,7 @@ Manager are stored as a single serialised option in the database and are exposed
 
 == Installation ==
 
-1. Upload the `acrosswp-model-selector` folder to the `/wp-content/plugins/` directory, or install through the WordPress Plugins screen directly.
+1. Upload the `acrossai-model-manager` folder to the `/wp-content/plugins/` directory, or install through the WordPress Plugins screen directly.
 2. Activate the plugin through the **Plugins** menu in WordPress.
 3. Go to **Settings > AcrossAI Model Manager**.
 4. Choose your preferred model for each capability type from the dropdowns. Only models from configured and connected providers appear.

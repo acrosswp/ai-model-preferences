@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Register all actions and filters for the plugin
  *
- * @link       https://github.com/AcrossWP/abilities-model-selector
+ * @link       https://github.com/AcrossWP/acrossai-model-manager
  * @since      0.0.1
  *
  * @package    AcrossAI_Model_Manager

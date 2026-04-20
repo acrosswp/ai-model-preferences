@@ -2,16 +2,16 @@
 	"name": "acrossai-model-manager",
 	"title": "AcrossAI Model Manager",
 	"description": "AcrossAI Model Manager for WordPress.",
-	"homepage": "https://github.com/AcrossWP/abilities-model-selector",
+	"homepage": "https://github.com/AcrossWP/acrossai-model-manager",
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/AcrossWP/abilities-model-selector.git"
+		"url": "git+https://github.com/AcrossWP/acrossai-model-manager.git"
 	},
 	"author": "AcrossWP",
 	"license": "GPL-3.0-or-later",
 	"bugs": {
-		"url": "https://github.com/AcrossWP/abilities-model-selector/issues"
+		"url": "https://github.com/AcrossWP/acrossai-model-manager/issues"
 	},
 	"scripts": {
 		"build": "wp-scripts build",

@@ -36,7 +36,7 @@ Supported capability types:
 1. Clone or download this repository into your `/wp-content/plugins/` directory:
    ```bash
    cd /wp-content/plugins/
-   git clone https://github.com/AcrossWP/abilities-model-selector.git
+   git clone https://github.com/AcrossWP/acrossai-model-manager.git
    ```
 2. Install PHP dependencies:
    ```bash

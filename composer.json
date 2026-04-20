@@ -3,7 +3,7 @@
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
 	"description": "AcrossAI Model Manager WordPress plugin.",
-	"homepage": "https://github.com/AcrossWP/abilities-model-selector",
+	"homepage": "https://github.com/AcrossWP/acrossai-model-manager",
 	"minimum-stability": "dev",
 	"require": {
 		"php": ">=7.4",
@@ -16,7 +16,7 @@
 		"model-manager"
 	],
 	"support": {
-		"issues": "https://github.com/AcrossWP/abilities-model-selector/issues"
+		"issues": "https://github.com/AcrossWP/acrossai-model-manager/issues"
 	},
 	"authors": [
 		{

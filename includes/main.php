@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://github.com/AcrossWP/abilities-model-selector
+ * @link       https://github.com/AcrossWP/acrossai-model-manager
  * @since      0.0.1
  *
  * @package    AcrossAI_Model_Manager
@@ -177,6 +177,7 @@ final class Main {
 	 */
 	private function define( $name, $value ) {
 		if ( ! defined( $name ) ) {
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.VariableConstantNameFound -- Constants defined via this method are always plugin-prefixed (ACAI_MODEL_MANAGER_*).
 			define( $name, $value );
 		}
 	}
@@ -216,7 +217,7 @@ final class Main {
 		 *
 		 * @since    0.0.1
 		 */
-		if ( apply_filters( 'acrossai-model-manager-load', true ) ) {
+		if ( apply_filters( 'acrossai_model_manager_load', true ) ) {
 			$this->define_admin_hooks();
 			$this->define_plugin_hooks();
 		}

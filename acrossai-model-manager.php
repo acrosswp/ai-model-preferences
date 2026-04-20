@@ -15,13 +15,13 @@ namespace AcrossAI_Model_Manager;
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://github.com/AcrossWP/abilities-model-selector
+ * @link              https://github.com/AcrossWP/acrossai-model-manager
  * @since             0.0.1
  * @package           AcrossAI_Model_Manager
  *
  * @wordpress-plugin
  * Plugin Name:       AcrossAI Model Manager
- * Plugin URI:        https://github.com/AcrossWP/abilities-model-selector
+ * Plugin URI:        https://github.com/AcrossWP/acrossai-model-manager
  * Description:       A WordPress plugin to manage AcrossAI Model Manager for users, allowing them to select and save their preferred AI models for various tasks.
  * Version:           0.0.1
  * Author:            okpoojagupta

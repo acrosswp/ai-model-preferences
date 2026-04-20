@@ -13,13 +13,14 @@ defined( 'ABSPATH' ) || exit;
 class I18n {
 
 	/**
-	 * Actually load the plugin textdomain on `init`
+	 * Load the plugin textdomain.
+	 *
+	 * Since WordPress 4.6, translations are loaded automatically for plugins
+	 * hosted on WordPress.org. This method is kept for local/custom translation
+	 * file overrides placed in wp-content/languages/plugins/.
 	 */
 	public function do_load_textdomain() {
-		load_plugin_textdomain(
-			'acrossai-model-manager',
-			false,
-			plugin_basename( dirname( \ACAI_MODEL_MANAGER_PLUGIN_FILE ) ) . '/languages/'
-		);
+		// WordPress 4.6+ auto-loads translations from WordPress.org.
+		// No manual load_plugin_textdomain() call is required.
 	}
 }
