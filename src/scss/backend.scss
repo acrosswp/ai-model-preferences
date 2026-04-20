@@ -1,5 +1,5 @@
 /**
- * AcrossWP Model Selector - Backend Admin Styles
+ * AcrossAI Model Manager - Backend Admin Styles
  *
  * Compiled from src/scss/backend.scss into build/css/backend.css via wp-scripts.
  *
@@ -11,7 +11,7 @@
 // Settings Page — Model Preferences Table
 //
 // Classic HTML table rendered as a fallback / server-side scaffold.
-// Selectors are prefixed with .acwpms- (AcrossWP Model Selector) to avoid conflicts
+// Selectors are prefixed with .acwpms- (AcrossAI Model Manager) to avoid conflicts
 // with WordPress core styles.
 // =============================================================================
 
@@ -95,5 +95,41 @@
 	// ---------------------------------------------------------------------------
 	.acwpms-save-row {
 		margin-top: 16px;
+	}
+
+	// ---------------------------------------------------------------------------
+	// Provider-grouped select — native <select> with <optgroup> per provider.
+	// Styled to match @wordpress/components SelectControl dimensions.
+	// ---------------------------------------------------------------------------
+	.acwpms-provider-select {
+		display: block;
+		width: 100%;
+		max-width: 480px;
+		min-height: 36px;
+		padding: 6px 24px 6px 8px;
+		font-size: 13px;
+		line-height: 1.5;
+		color: #1e1e1e;
+		background-color: #fff;
+		border: 1px solid #949494;
+		border-radius: 2px;
+		appearance: auto;
+		cursor: pointer;
+
+		&:focus {
+			border-color: #3858e9;
+			box-shadow: 0 0 0 1px #3858e9;
+			outline: 2px solid transparent;
+		}
+
+		optgroup {
+			font-weight: 600;
+			color: #3c434a;
+		}
+
+		option {
+			font-weight: 400;
+			color: #1e1e1e;
+		}
 	}
 }

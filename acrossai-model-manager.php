@@ -1,11 +1,11 @@
 <?php
 /**
- * Instantiates the AcrossWP Model Selector plugin
+ * Instantiates the AcrossAI Model Manager plugin
  *
- * @package AcrossWP_Model_Selector
+ * @package AcrossAI_Model_Manager
  */
 
-namespace AcrossWP_Model_Selector;
+namespace AcrossAI_Model_Manager;
 
 /**
  * The plugin bootstrap file
@@ -17,18 +17,18 @@ namespace AcrossWP_Model_Selector;
  *
  * @link              https://github.com/AcrossWP/abilities-model-selector
  * @since             0.0.1
- * @package           AcrossWP_Model_Selector
+ * @package           AcrossAI_Model_Manager
  *
  * @wordpress-plugin
- * Plugin Name:       AcrossWP Model Selector
+ * Plugin Name:       AcrossAI Model Manager
  * Plugin URI:        https://github.com/AcrossWP/abilities-model-selector
- * Description:       A WordPress plugin to manage AcrossWP Model Selector for users, allowing them to select and save their preferred AI models for various tasks.
+ * Description:       A WordPress plugin to manage AcrossAI Model Manager for users, allowing them to select and save their preferred AI models for various tasks.
  * Version:           0.0.1
  * Author:            okpoojagupta
- * Author URI:        https://github.com/AcrossWP/
+ * Author URI:        http://github.com/okpoojagupta/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       acrosswp-model-selector
+ * Text Domain:       acrossai-model-manager
  * Domain Path:       /languages
  */
 
@@ -42,13 +42,13 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 0.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'ACWP_MODEL_SELECTOR_PLUGIN_FILE', __FILE__ );
+define( 'ACAI_MODEL_MANAGER_PLUGIN_FILE', __FILE__ );
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/activator.php
  */
-function acwp_model_selector_activate() {
+function acai_model_manager_activate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/Activator.php';
 	Includes\Activator::activate();
 }
@@ -57,13 +57,13 @@ function acwp_model_selector_activate() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/deactivator.php
  */
-function acwp_model_selector_deactivate() {
+function acai_model_manager_deactivate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/Deactivator.php';
 	Includes\Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'AcrossWP_Model_Selector\acwp_model_selector_activate' );
-register_deactivation_hook( __FILE__, 'AcrossWP_Model_Selector\acwp_model_selector_deactivate' );
+register_activation_hook( __FILE__, 'AcrossAI_Model_Manager\acai_model_manager_activate' );
+register_deactivation_hook( __FILE__, 'AcrossAI_Model_Manager\acai_model_manager_deactivate' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -71,7 +71,7 @@ register_deactivation_hook( __FILE__, 'AcrossWP_Model_Selector\acwp_model_select
  */
 require plugin_dir_path( __FILE__ ) . 'includes/Main.php';
 
-use AcrossWP_Model_Selector\Includes\Main;
+use AcrossAI_Model_Manager\Includes\Main;
 
 /**
  * Begins execution of the plugin.
@@ -82,7 +82,7 @@ use AcrossWP_Model_Selector\Includes\Main;
  *
  * @since    0.0.1
  */
-function acwp_model_selector_run() {
+function acai_model_manager_run() {
 
 	$plugin = Main::instance();
 
@@ -91,4 +91,4 @@ function acwp_model_selector_run() {
 	 */
 	add_action( 'plugins_loaded', array( $plugin, 'run' ), 0 );
 }
-acwp_model_selector_run();
+acai_model_manager_run();

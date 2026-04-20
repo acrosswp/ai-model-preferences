@@ -1,5 +1,5 @@
 <?php
-namespace AcrossWP_Model_Selector\Admin;
+namespace AcrossAI_Model_Manager\Admin;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
@@ -11,8 +11,8 @@ defined( 'ABSPATH' ) || exit;
  * @link       https://github.com/AcrossWP/abilities-model-selector
  * @since      0.0.1
  *
- * @package    AcrossWP_Model_Selector
- * @subpackage AcrossWP_Model_Selector/admin
+ * @package    AcrossAI_Model_Manager
+ * @subpackage AcrossAI_Model_Manager/admin
  */
 
 /**
@@ -21,8 +21,8 @@ defined( 'ABSPATH' ) || exit;
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    AcrossWP_Model_Selector
- * @subpackage AcrossWP_Model_Selector/admin
+ * @package    AcrossAI_Model_Manager
+ * @subpackage AcrossAI_Model_Manager/admin
  * @author     WPBoilerplate <contact@wpboilerplate.com>
  */
 class Main {
@@ -75,8 +75,8 @@ class Main {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
-		$this->js_asset_file  = include \ACWP_MODEL_SELECTOR_PLUGIN_PATH . 'build/js/backend.asset.php';
-		$this->css_asset_file = include \ACWP_MODEL_SELECTOR_PLUGIN_PATH . 'build/css/backend.asset.php';
+		$this->js_asset_file  = include \ACAI_MODEL_MANAGER_PLUGIN_PATH . 'build/js/backend.asset.php';
+		$this->css_asset_file = include \ACAI_MODEL_MANAGER_PLUGIN_PATH . 'build/css/backend.asset.php';
 	}
 
 	/**
@@ -91,13 +91,13 @@ class Main {
 
 		// Global admin stylesheet (includes all settings-page styles from src/scss/backend.scss).
 		$css_deps = $this->css_asset_file['dependencies'];
-		if ( 'settings_page_acrosswp-model-selector' === $hook ) {
+		if ( 'settings_page_acrossai-model-manager' === $hook ) {
 			$css_deps = array_unique( array_merge( $css_deps, array( 'wp-components' ) ) );
 		}
-		wp_enqueue_style( $this->plugin_name, \ACWP_MODEL_SELECTOR_PLUGIN_URL . 'build/css/backend.css', $css_deps, $this->css_asset_file['version'], 'all' );
+		wp_enqueue_style( $this->plugin_name, \ACAI_MODEL_MANAGER_PLUGIN_URL . 'build/css/backend.css', $css_deps, $this->css_asset_file['version'], 'all' );
 
 		// Settings-page-specific assets.
-		if ( 'settings_page_acrosswp-model-selector' !== $hook ) {
+		if ( 'settings_page_acrossai-model-manager' !== $hook ) {
 			return;
 		}
 
@@ -147,9 +147,11 @@ class Main {
 	}
 
 	/**
-	 * Returns models grouped by capability for the React settings app.
+	 * Returns models grouped by capability then by provider for the React settings app.
 	 *
-	 * @return array<string, list<array{value: string, label: string}>>
+	 * Shape: capability_key => [ provider_id => [ 'label' => string, 'models' => list<{value, label}> ] ]
+	 *
+	 * @return array<string, array<string, array{label: string, models: list<array{value: string, label: string}>}>>
 	 */
 	private function get_models_grouped_by_capability(): array {
 		// AiClient CapabilityEnum has no 'vision' type — all text/vision models are
@@ -166,15 +168,23 @@ class Main {
 		foreach ( $all_models as $model ) {
 			foreach ( $model['capabilities'] as $capability ) {
 				foreach ( $capability_map as $group_key => $source_caps ) {
-					if ( in_array( $capability, $source_caps, true ) ) {
-						$entry = array(
-							'value' => $model['provider'] . '::' . $model['id'],
-							'label' => $model['label'] . ' (' . $model['provider_label'] . ')',
+					if ( ! in_array( $capability, $source_caps, true ) ) {
+						continue;
+					}
+					$provider_id = $model['provider'];
+					if ( ! isset( $grouped[ $group_key ][ $provider_id ] ) ) {
+						$grouped[ $group_key ][ $provider_id ] = array(
+							'label'  => $model['provider_label'],
+							'models' => array(),
 						);
-						// Avoid duplicates within the same group.
-						if ( ! in_array( $entry, $grouped[ $group_key ], true ) ) {
-							$grouped[ $group_key ][] = $entry;
-						}
+					}
+					$entry = array(
+						'value' => $provider_id . '::' . $model['id'],
+						'label' => $model['label'],
+					);
+					// Avoid duplicates within the same provider group.
+					if ( ! in_array( $entry, $grouped[ $group_key ][ $provider_id ]['models'], true ) ) {
+						$grouped[ $group_key ][ $provider_id ]['models'][] = $entry;
 					}
 				}
 			}
@@ -190,18 +200,18 @@ class Main {
 	 */
 	public function enqueue_scripts( string $hook = '' ) {
 
-		wp_enqueue_script( $this->plugin_name, \ACWP_MODEL_SELECTOR_PLUGIN_URL . 'build/js/backend.js', $this->js_asset_file['dependencies'], $this->js_asset_file['version'], false );
+		wp_enqueue_script( $this->plugin_name, \ACAI_MODEL_MANAGER_PLUGIN_URL . 'build/js/backend.js', $this->js_asset_file['dependencies'], $this->js_asset_file['version'], false );
 
 		// Inject settings data after the handle is registered (wp_localize_script requires a registered handle).
-		if ( 'settings_page_acrosswp-model-selector' === $hook ) {
+		if ( 'settings_page_acrossai-model-manager' === $hook ) {
 			wp_localize_script(
 				$this->plugin_name,
-				'acwpModelSelectorSettings',
+				'acaiModelManagerSettings',
 				array(
 					'models'      => $this->get_models_grouped_by_capability(),
-					'preferences' => (object) get_option( \AcrossWP_Model_Selector\Admin\Partials\Menu::OPTION_KEY, array() ),
+					'preferences' => (object) get_option( \AcrossAI_Model_Manager\Admin\Partials\Menu::OPTION_KEY, array() ),
 					'nonce'       => wp_create_nonce( 'wp_rest' ),
-					'optionName'  => \AcrossWP_Model_Selector\Admin\Partials\Menu::OPTION_KEY,
+					'optionName'  => \AcrossAI_Model_Manager\Admin\Partials\Menu::OPTION_KEY,
 				)
 			);
 		}
@@ -216,8 +226,8 @@ class Main {
 	public function add_settings_link( array $links ): array {
 		$settings_link = sprintf(
 			'<a href="%s">%s</a>',
-			esc_url( admin_url( 'options-general.php?page=acrosswp-model-selector' ) ),
-			esc_html__( 'Settings', 'acrosswp-model-selector' )
+			esc_url( admin_url( 'options-general.php?page=acrossai-model-manager' ) ),
+			esc_html__( 'Settings', 'acrossai-model-manager' )
 		);
 		array_unshift( $links, $settings_link );
 		return $links;

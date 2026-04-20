@@ -22,7 +22,7 @@
  * @link       https://github.com/AcrossWP/abilities-model-selector
  * @since      0.0.1
  *
- * @package    AcrossWP_Model_Selector
+ * @package    AcrossAI_Model_Manager
  */
 
 // If uninstall not called from WordPress, then exit.

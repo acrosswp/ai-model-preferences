@@ -1,5 +1,5 @@
 <?php
-namespace AcrossWP_Model_Selector\Includes;
+namespace AcrossAI_Model_Manager\Includes;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
@@ -7,8 +7,8 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Define the internationalization functionality
  *
- * @package    AcrossWP_Model_Selector
- * @subpackage AcrossWP_Model_Selector/includes
+ * @package    AcrossAI_Model_Manager
+ * @subpackage AcrossAI_Model_Manager/includes
  */
 class I18n {
 
@@ -17,9 +17,9 @@ class I18n {
 	 */
 	public function do_load_textdomain() {
 		load_plugin_textdomain(
-			'acrosswp-model-selector',
+			'acrossai-model-manager',
 			false,
-			plugin_basename( dirname( \ACWP_MODEL_SELECTOR_PLUGIN_FILE ) ) . '/languages/'
+			plugin_basename( dirname( \ACAI_MODEL_MANAGER_PLUGIN_FILE ) ) . '/languages/'
 		);
 	}
 }

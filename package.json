@@ -1,7 +1,7 @@
 {
-	"name": "acrosswp-model-selector",
-	"title": "AcrossWP Model Selector",
-	"description": "AcrossWP Model Selector for WordPress.",
+	"name": "acrossai-model-manager",
+	"title": "AcrossAI Model Manager",
+	"description": "AcrossAI Model Manager for WordPress.",
 	"homepage": "https://github.com/AcrossWP/abilities-model-selector",
 	"private": true,
 	"repository": {
@@ -50,6 +50,6 @@
 		"extends": "@wordpress/stylelint-config/scss"
 	},
 	"keywords": [
-		"acrosswp-model-selector"
+		"acrossai-model-manager"
 	]
 }

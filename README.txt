@@ -1,5 +1,5 @@
-=== AcrossWP Model Selector ===
-Contributors: okpoojagupta, acrosswp
+=== AcrossAI Model Manager ===
+Contributors: okpoojagupta
 Donate link: https://github.com/AcrossWP/abilities-model-selector
 Tags: ai, connectors, models, manager, preferences, abilities
 Requires at least: 7.0
@@ -13,7 +13,7 @@ Choose your preferred AI model for text generation, image generation, and vision
 
 == Description ==
 
-AcrossWP Model Selector gives site administrators full control over which AI model WordPress uses for each capability type. By default, WordPress picks the first available model from your configured AI connectors. This plugin adds a settings page under **Settings > AcrossWP Model Selector** where you can pin a specific model per capability — and that model will always be prioritised.
+AcrossAI Model Manager gives site administrators full control over which AI model WordPress uses for each capability type. By default, WordPress picks the first available model from your configured AI connectors. This plugin adds a settings page under **Settings > AcrossAI Model Manager** where you can pin a specific model per capability — and that model will always be prioritised.
 
 **Capability types supported:**
 
@@ -36,7 +36,7 @@ Manager are stored as a single serialised option in the database and are exposed
 
 1. Upload the `acrosswp-model-selector` folder to the `/wp-content/plugins/` directory, or install through the WordPress Plugins screen directly.
 2. Activate the plugin through the **Plugins** menu in WordPress.
-3. Go to **Settings > AcrossWP Model Selector**.
+3. Go to **Settings > AcrossAI Model Manager**.
 4. Choose your preferred model for each capability type from the dropdowns. Only models from configured and connected providers appear.
 5. Click **Save Changes**.
 
@@ -64,13 +64,13 @@ Any provider that registers itself with the WordPress AI client registry and exp
 
 == Screenshots ==
 
-1. The AcrossWP Model Selector settings page showing dropdowns for each capability type.
+1. The AcrossAI Model Manager settings page showing dropdowns for each capability type.
 
 == Changelog ==
 
 = 0.0.1 =
 * Initial release.
-* Settings page with React UI under Settings > AcrossWP Model Selector.
+* Settings page with React UI under Settings > AcrossAI Model Manager.
 * Per-capability model preference for text generation, image generation, and vision.
 * Integrates with the WordPress AI plugin preference filter hooks.
 * REST API support for seamless save without page reload.

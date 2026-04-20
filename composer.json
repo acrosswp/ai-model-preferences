@@ -1,8 +1,8 @@
 {
-	"name": "acrosswp/acrosswp-model-selector",
+	"name": "acrossai/acrossai-model-manager",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
-	"description": "AcrossWP Model Selector WordPress plugin.",
+	"description": "AcrossAI Model Manager WordPress plugin.",
 	"homepage": "https://github.com/AcrossWP/abilities-model-selector",
 	"minimum-stability": "dev",
 	"require": {
@@ -13,21 +13,21 @@
 		"wordpress",
 		"plugin",
 		"ai",
-		"model-selector"
+		"model-manager"
 	],
 	"support": {
 		"issues": "https://github.com/AcrossWP/abilities-model-selector/issues"
 	},
 	"authors": [
 		{
-			"name": "AcrossWP"
+			"name": "okpoojagupta"
 		}
 	],
 	"autoload": {
 		"psr-4": {
-			"AcrossWP_Model_Selector\\Includes\\": "includes/",
-			"AcrossWP_Model_Selector\\Admin\\": "admin/",
-			"AcrossWP_Model_Selector\\Public\\": "public/"
+			"AcrossAI_Model_Manager\\Includes\\": "includes/",
+			"AcrossAI_Model_Manager\\Admin\\": "admin/",
+			"AcrossAI_Model_Manager\\Public\\": "public/"
 		}
 	}
 }

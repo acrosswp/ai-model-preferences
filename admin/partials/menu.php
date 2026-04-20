@@ -1,20 +1,20 @@
 <?php
-namespace AcrossWP_Model_Selector\Admin\Partials;
+namespace AcrossAI_Model_Manager\Admin\Partials;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Handles the admin menu and settings page for AcrossWP Model Selector.
+ * Handles the admin menu and settings page for AcrossAI Model Manager.
  *
  * @since      0.0.1
- * @package    AcrossWP_Model_Selector\Admin\Partials
+ * @package    AcrossAI_Model_Manager\Admin\Partials
  */
 class Menu {
 
-	const OPTION_KEY        = 'acwp_model_selector_preferences';
+	const OPTION_KEY        = 'acai_model_manager_preferences';
 	const LEGACY_OPTION_KEY = 'aiam_model_preferences';
-	const PAGE_SLUG         = 'acrosswp-model-selector';
+	const PAGE_SLUG         = 'acrossai-model-manager';
 
 	/**
 	 * Capability types shown on the settings page.
@@ -55,8 +55,8 @@ class Menu {
 	/** Adds the Settings sub-menu page. */
 	public function add_menu(): void {
 		add_options_page(
-			__( 'AcrossWP Model Selector', 'acrosswp-model-selector' ),
-			__( 'AcrossWP Model Selector', 'acrosswp-model-selector' ),
+			__( 'Model Manager', 'acrossai-model-manager' ),
+			__( 'Model Manager', 'acrossai-model-manager' ),
 			'manage_options',
 			self::PAGE_SLUG,
 			array( $this, 'render_page' ),
@@ -69,7 +69,7 @@ class Menu {
 		$this->migrate_legacy_preferences();
 
 		register_setting(
-			'acwp_model_selector_settings_group',
+			'acai_model_manager_settings_group',
 			self::OPTION_KEY,
 			array(
 				'type'              => 'object',
@@ -147,12 +147,12 @@ class Menu {
 	/** Renders the settings page — the React app mounts into #acwpms-settings-root. */
 	public function render_page(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to access this page.', 'acrosswp-model-selector' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'acrossai-model-manager' ) );
 		}
 		?>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<p class="description"><?php esc_html_e( 'Choose the preferred AI model for each capability type. These selections override the WordPress defaults.', 'acrosswp-model-selector' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Choose the preferred AI model for each capability type. These selections override the WordPress defaults.', 'acrossai-model-manager' ); ?></p>
 			<div id="acwpms-settings-root"></div>
 		</div>
 		<?php

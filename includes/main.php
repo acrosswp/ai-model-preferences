@@ -1,5 +1,5 @@
 <?php
-namespace AcrossWP_Model_Selector\Includes;
+namespace AcrossAI_Model_Manager\Includes;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
@@ -13,8 +13,8 @@ defined( 'ABSPATH' ) || exit;
  * @link       https://github.com/AcrossWP/abilities-model-selector
  * @since      0.0.1
  *
- * @package    AcrossWP_Model_Selector
- * @subpackage AcrossWP_Model_Selector/includes
+ * @package    AcrossAI_Model_Manager
+ * @subpackage AcrossAI_Model_Manager/includes
  */
 
 /**
@@ -27,8 +27,8 @@ defined( 'ABSPATH' ) || exit;
  * version of the plugin.
  *
  * @since      0.0.1
- * @package    AcrossWP_Model_Selector
- * @subpackage AcrossWP_Model_Selector/includes
+ * @package    AcrossAI_Model_Manager
+ * @subpackage AcrossAI_Model_Manager/includes
  * @author     WPBoilerplate <contact@wpboilerplate.com>
  */
 final class Main {
@@ -36,7 +36,7 @@ final class Main {
 	/**
 	 * The single instance of the class.
 	 *
-	 * @var AcrossWP_Model_Selector
+	 * @var AcrossAI_Model_Manager
 	 * @since 0.0.1
 	 */
 	protected static $_instance = null;
@@ -56,7 +56,7 @@ final class Main {
 	 *
 	 * @since    0.0.1
 	 * @access   protected
-	 * @var      AcrossWP_Model_Selector_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      AcrossAI_Model_Manager_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -105,18 +105,18 @@ final class Main {
 	 */
 	public function __construct() {
 
-		$this->plugin_name = 'acrosswp-model-selector';
+		$this->plugin_name = 'acrossai-model-manager';
 
 		$this->define_constants();
 
-		if ( defined( 'ACWP_MODEL_SELECTOR_VERSION' ) ) {
-			$this->version = ACWP_MODEL_SELECTOR_VERSION;
+		if ( defined( 'ACAI_MODEL_MANAGER_VERSION' ) ) {
+			$this->version = ACAI_MODEL_MANAGER_VERSION;
 		} else {
 			$this->version = '0.0.1';
 		}
 
 		// Load the autoloader class manually before registering it
-		$plugin_path = ACWP_MODEL_SELECTOR_PLUGIN_PATH;
+		$plugin_path = ACAI_MODEL_MANAGER_PLUGIN_PATH;
 
 		require_once $plugin_path . 'includes/Autoloader.php';
 
@@ -130,14 +130,14 @@ final class Main {
 	}
 
 	/**
-	 * Main AcrossWP_Model_Selector Instance.
+	 * Main AcrossAI_Model_Manager Instance.
 	 *
 	 * Ensures only one instance of WooCommerce is loaded or can be loaded.
 	 *
 	 * @since 0.0.1
 	 * @static
-	 * @see AcrossWP_Model_Selector()
-	 * @return AcrossWP_Model_Selector - Main instance.
+	 * @see AcrossAI_Model_Manager()
+	 * @return AcrossAI_Model_Manager - Main instance.
 	 */
 	public static function instance() {
 		if ( null === self::$_instance ) {
@@ -151,23 +151,23 @@ final class Main {
 	 */
 	private function define_constants() {
 
-		$this->define( 'ACWP_MODEL_SELECTOR_PLUGIN_BASENAME', plugin_basename( \ACWP_MODEL_SELECTOR_PLUGIN_FILE ) );
-		$this->define( 'ACWP_MODEL_SELECTOR_PLUGIN_PATH', plugin_dir_path( \ACWP_MODEL_SELECTOR_PLUGIN_FILE ) );
-		$this->define( 'ACWP_MODEL_SELECTOR_PLUGIN_URL', plugin_dir_url( \ACWP_MODEL_SELECTOR_PLUGIN_FILE ) );
-		$this->define( 'ACWP_MODEL_SELECTOR_PLUGIN_NAME_SLUG', $this->plugin_name );
-		$this->define( 'ACWP_MODEL_SELECTOR_PLUGIN_NAME', 'AcrossWP Model Selector' );
+		$this->define( 'ACAI_MODEL_MANAGER_PLUGIN_BASENAME', plugin_basename( \ACAI_MODEL_MANAGER_PLUGIN_FILE ) );
+		$this->define( 'ACAI_MODEL_MANAGER_PLUGIN_PATH', plugin_dir_path( \ACAI_MODEL_MANAGER_PLUGIN_FILE ) );
+		$this->define( 'ACAI_MODEL_MANAGER_PLUGIN_URL', plugin_dir_url( \ACAI_MODEL_MANAGER_PLUGIN_FILE ) );
+		$this->define( 'ACAI_MODEL_MANAGER_PLUGIN_NAME_SLUG', $this->plugin_name );
+		$this->define( 'ACAI_MODEL_MANAGER_PLUGIN_NAME', 'AcrossAI Model Manager' );
 
 		if ( ! function_exists( 'get_plugin_data' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
-		$plugin_file = defined( 'ACWP_MODEL_SELECTOR_PLUGIN_FILE' )
-			? \ACWP_MODEL_SELECTOR_PLUGIN_FILE
-			: \ACWP_MODEL_SELECTOR_PLUGIN_FILE;
+		$plugin_file = defined( 'ACAI_MODEL_MANAGER_PLUGIN_FILE' )
+			? \ACAI_MODEL_MANAGER_PLUGIN_FILE
+			: \ACAI_MODEL_MANAGER_PLUGIN_FILE;
 		$plugin_data = get_plugin_data( $plugin_file );
 		$version     = $plugin_data['Version'];
-		$this->define( 'ACWP_MODEL_SELECTOR_VERSION', $version );
+		$this->define( 'ACAI_MODEL_MANAGER_VERSION', $version );
 
-		$this->plugin_dir = ACWP_MODEL_SELECTOR_PLUGIN_PATH;
+		$this->plugin_dir = ACAI_MODEL_MANAGER_PLUGIN_PATH;
 	}
 
 	/**
@@ -192,10 +192,10 @@ final class Main {
 	 */
 	private function register_autoloader() {
 		// Get the plugin path
-		$plugin_path = ACWP_MODEL_SELECTOR_PLUGIN_PATH;
+		$plugin_path = ACAI_MODEL_MANAGER_PLUGIN_PATH;
 
 		// Create autoloader instance
-		$this->autoloader = new Autoloader( 'AcrossWP_Model_Selector', $plugin_path );
+		$this->autoloader = new Autoloader( 'AcrossAI_Model_Manager', $plugin_path );
 
 		// Register the autoloader
 		spl_autoload_register( array( $this->autoloader, 'autoload' ) );
@@ -216,7 +216,7 @@ final class Main {
 		 *
 		 * @since    0.0.1
 		 */
-		if ( apply_filters( 'acrosswp-model-selector-load', true ) ) {
+		if ( apply_filters( 'acrossai-model-manager-load', true ) ) {
 			$this->define_admin_hooks();
 			$this->define_plugin_hooks();
 		}
@@ -233,7 +233,7 @@ final class Main {
 		/**
 		 * Add composer file
 		 */
-		$plugin_path = ACWP_MODEL_SELECTOR_PLUGIN_PATH;
+		$plugin_path = ACAI_MODEL_MANAGER_PLUGIN_PATH;
 
 		if ( file_exists( $plugin_path . 'vendor/autoload.php' ) ) {
 			require_once $plugin_path . 'vendor/autoload.php';
@@ -252,10 +252,10 @@ final class Main {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - AcrossWP_Model_Selector\Admin\Loader. Orchestrates the hooks of the plugin.
-	 * - AcrossWP_Model_Selector\Admin\I18n. Defines internationalization functionality.
-	 * - AcrossWP_Model_Selector\Admin\Main. Defines all hooks for the admin area.
-	 * - AcrossWP_Model_Selector_Public. Defines all hooks for the public side of the site.
+	 * - AcrossAI_Model_Manager\Admin\Loader. Orchestrates the hooks of the plugin.
+	 * - AcrossAI_Model_Manager\Admin\I18n. Defines internationalization functionality.
+	 * - AcrossAI_Model_Manager\Admin\Main. Defines all hooks for the admin area.
+	 * - AcrossAI_Model_Manager_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -279,7 +279,7 @@ final class Main {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new \AcrossWP_Model_Selector\Admin\Main( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new \AcrossAI_Model_Manager\Admin\Main( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 
@@ -288,11 +288,11 @@ final class Main {
 		/**
 		 * Settings page and plugin action links
 		 */
-		$menu = new \AcrossWP_Model_Selector\Admin\Partials\Menu( $this->get_plugin_name(), $this->get_version() );
+		$menu = new \AcrossAI_Model_Manager\Admin\Partials\Menu( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'admin_menu', $menu, 'add_menu' );
 		$this->loader->add_action( 'init', $menu, 'register_settings' );
 		$this->loader->add_filter(
-			'plugin_action_links_' . ACWP_MODEL_SELECTOR_PLUGIN_BASENAME,
+			'plugin_action_links_' . ACAI_MODEL_MANAGER_PLUGIN_BASENAME,
 			$plugin_admin,
 			'add_settings_link'
 		);
@@ -339,7 +339,7 @@ final class Main {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     0.0.1
-	 * @return    AcrossWP_Model_Selector_Loader    Orchestrates the hooks of the plugin.
+	 * @return    AcrossAI_Model_Manager_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
