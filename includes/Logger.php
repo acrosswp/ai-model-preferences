@@ -45,6 +45,14 @@ class Logger {
 	private static $shutdown_registered = false;
 
 	/**
+	 * Whether the http_api_debug action has already been registered.
+	 * One handler covers all AI requests in a single page load.
+	 *
+	 * @var bool
+	 */
+	private static $http_debug_registered = false;
+
+	/**
 	 * Internal path segments to skip when walking the backtrace to find
 	 * the true caller of wp_ai_client_prompt().
 	 *
@@ -77,14 +85,20 @@ class Logger {
 	 */
 	public function on_before_generate( $event ): void {
 		self::$start_times[] = array(
-			'time'   => microtime( true ),
-			'caller' => self::resolve_caller(),
-			'event'  => $event,
+			'time'          => microtime( true ),
+			'caller'        => self::resolve_caller(),
+			'event'         => $event,
+			'error_message' => '',
 		);
 
 		if ( ! self::$shutdown_registered ) {
 			self::$shutdown_registered = true;
 			register_shutdown_function( array( static::class, 'drain_failed_requests' ) );
+		}
+
+		if ( ! self::$http_debug_registered ) {
+			self::$http_debug_registered = true;
+			add_action( 'http_api_debug', array( static::class, 'on_http_api_debug' ), 10, 5 );
 		}
 	}
 
@@ -143,6 +157,70 @@ class Logger {
 		}
 
 		$wpdb->insert( self::get_table_name(), $data, $formats ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	}
+
+	/**
+	 * Captures HTTP errors that occur during an active AI generation call.
+	 *
+	 * Fires synchronously inside wp_safe_remote_request() via the http_api_debug
+	 * action. When it fires while our timing stack is non-empty we are inside an
+	 * AI generation call. Any non-2xx HTTP response or WP_Error is stored on the
+	 * top stack entry so drain_failed_requests() can write it to the log table.
+	 *
+	 * @param array|WP_Error $response  The HTTP response or WP_Error.
+	 * @param string         $context   'response' or 'error'.
+	 * @param string         $class     The transport class name.
+	 * @param array          $args      The request arguments.
+	 * @param string         $url       The request URL.
+	 */
+	public static function on_http_api_debug( $response, $context, $class, $args, $url ): void {
+		if ( empty( self::$start_times ) ) {
+			return; // No active AI request in flight.
+		}
+
+		$error_message = '';
+
+		if ( is_wp_error( $response ) ) {
+			// Network-level failure: DNS, connection refused, timeout, etc.
+			$error_message = $response->get_error_message();
+		} else {
+			$status = (int) wp_remote_retrieve_response_code( $response );
+			if ( $status < 200 || $status >= 300 ) {
+				// HTTP error from the provider (401, 403, 429, 500, etc.).
+				$error_message = 'HTTP ' . $status;
+				$body          = wp_remote_retrieve_body( $response );
+
+				if ( ! empty( $body ) ) {
+					$decoded = json_decode( $body, true );
+
+					if ( JSON_ERROR_NONE === json_last_error() ) {
+						// OpenAI / OpenAI-compatible: { "error": { "message": "..." } }
+						if ( ! empty( $decoded['error']['message'] ) ) {
+							$error_message .= ': ' . $decoded['error']['message'];
+						// Generic: { "error": "..." }
+						} elseif ( ! empty( $decoded['error'] ) && is_string( $decoded['error'] ) ) {
+							$error_message .= ': ' . $decoded['error'];
+						// Hugging Face / generic: { "message": "..." }
+						} elseif ( ! empty( $decoded['message'] ) ) {
+							$error_message .= ': ' . $decoded['message'];
+						} else {
+							$error_message .= ': ' . substr( $body, 0, 500 );
+						}
+					} else {
+						$error_message .= ': ' . substr( $body, 0, 500 );
+					}
+				}
+			}
+		}
+
+		if ( '' === $error_message ) {
+			return;
+		}
+
+		// Store on the top stack entry — the most recently started (and still
+		// running) AI request. PHP is single-threaded so this is always correct.
+		$top = count( self::$start_times ) - 1;
+		self::$start_times[ $top ]['error_message'] = $error_message;
 	}
 
 	/**
@@ -208,6 +286,8 @@ class Logger {
 		$meta     = $model->metadata();
 		$capability = $event->getCapability();
 
+		$error_message = $context['error_message'] ?? '';
+
 		$data    = array(
 			'result_id'         => '',
 			'capability'        => $capability ? $capability->value : '',
@@ -221,6 +301,7 @@ class Logger {
 			'completion_tokens' => 0,
 			'total_tokens'      => 0,
 			'finish_reason'     => 'error',
+			'error_message'     => $error_message,
 			'duration_ms'       => $duration_ms,
 			'source_type'       => $caller['source_type'],
 			'source_name'       => $caller['source_name'],
@@ -229,7 +310,7 @@ class Logger {
 			'user_id'           => get_current_user_id(),
 			'created_at'        => current_time( 'mysql', true ),
 		);
-		$formats = array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%s' );
+		$formats = array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%s' );
 
 		$wpdb->insert( self::get_table_name(), $data, $formats ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	}

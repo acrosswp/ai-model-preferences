@@ -139,6 +139,12 @@ class LogPage {
 							<?php endif; ?>
 						</td>
 					</tr>
+					<?php if ( 'error' === $row->finish_reason && ! empty( $row->error_message ) ) : ?>
+					<tr>
+						<th><?php esc_html_e( 'Error Message', 'acrossai-model-manager' ); ?></th>
+						<td style="color:#cc1818;"><code style="color:inherit;background:#fef2f2;padding:4px 8px;display:block;white-space:pre-wrap;word-break:break-word;"><?php echo esc_html( $row->error_message ); ?></code></td>
+					</tr>
+					<?php endif; ?>
 					<tr><th><?php esc_html_e( 'Duration', 'acrossai-model-manager' ); ?></th><td><?php echo absint( $row->duration_ms ); ?> ms</td></tr>
 					<tr><th><?php esc_html_e( 'Prompt Tokens', 'acrossai-model-manager' ); ?></th><td><?php echo absint( $row->prompt_tokens ); ?></td></tr>
 					<tr><th><?php esc_html_e( 'Completion Tokens', 'acrossai-model-manager' ); ?></th><td><?php echo absint( $row->completion_tokens ); ?></td></tr>
@@ -340,9 +346,13 @@ class AI_Log_List_Table extends \WP_List_Table {
 				return absint( $item['duration_ms'] ) . ' ms';
 
 			case 'finish_reason':
-				$reason = $item['finish_reason'] ?? '';
+				$reason  = $item['finish_reason'] ?? '';
+				$err_msg = $item['error_message'] ?? '';
 				if ( 'error' === $reason ) {
-					return '<span style="color:#cc1818;font-weight:600;" title="' . esc_attr__( 'Request failed — API error, invalid key, network failure, or timeout.', 'acrossai-model-manager' ) . '">'
+					$tooltip = $err_msg
+						? esc_attr( $err_msg )
+						: esc_attr__( 'Request failed — API error, invalid key, network failure, or timeout.', 'acrossai-model-manager' );
+					return '<span style="color:#cc1818;font-weight:600;" title="' . $tooltip . '">'
 						. esc_html__( 'error', 'acrossai-model-manager' )
 						. '</span>';
 				}
