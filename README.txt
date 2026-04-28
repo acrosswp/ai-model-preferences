@@ -5,7 +5,7 @@ Tags: ai, ai models, model manager, ai logging, wordpress ai
 Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.0.6
+Stable tag: 0.0.7
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,9 @@ Any provider registered with the [AI plugin](https://wordpress.org/plugins/ai/) 
 3. Screenshots to show all the of WP AI Client
 
 == Changelog ==
+
+= 0.0.7 =
+* Fix admin hook name from `settings_page_` to `toplevel_page_` — resolves missing styles/scripts on the Model Manager settings page (top-level Options menu pages use `toplevel_page_` as the hook prefix, not `settings_page_`).
 
 = 0.0.6 =
 * Log failed AI requests (invalid key, network error, timeout) — uses PHP shutdown function to drain any stack entries not popped by `wp_ai_client_after_generate_result`; failed rows stored with `finish_reason = 'error'` and full elapsed duration.
